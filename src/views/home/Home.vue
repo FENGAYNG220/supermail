@@ -10,12 +10,14 @@
       </swiper-item>
     </swiper> -->
     <home-swiper :banners='banners'></home-swiper>
+    <recommend-view :recommends='recommends'/>
   </div>
 </template>
 
 <script>
 import NavBar from "components/common/navbar/NavBar"
 import HomeSwiper from "./childComps/HomeSwiper";
+import RecommendView from "./childComps/RecommendView"
 import {getHomeMultidata} from "network/home"
 // import { Swiper, SwiperItem } from "components/common/swiper";
 
@@ -25,13 +27,14 @@ export default {
     NavBar,
     // Swiper,
     // SwiperItem
-    HomeSwiper
+    HomeSwiper,
+    RecommendView
   },
   data(){
     return {
       banners:[],
       recommends:[]
-
+      
     }
   },
   created(){
@@ -39,7 +42,7 @@ export default {
     getHomeMultidata().then(res=>{
         this.banners=res.data.banner.list
         this.recommends=res.data.recommend.list
-        console.log(this.banners)
+        console.log(this.banners,this.recommends)
     })
   }
 }

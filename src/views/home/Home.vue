@@ -12,8 +12,8 @@
     <home-swiper :banners='banners'></home-swiper>
     <recommend-view :recommends='recommends'/>
     <feature-view/>
-    <tab-control :titles="['流行','新款','精选']"/>
-    <div style="width:100%;height:500px"></div>
+    <tab-control class="tab-control" :titles="['流行','新款','精选']"/>
+    <div style="width:100%;height:1000px;background:yellowgreen;">111</div>
   </div>
 </template>
 
@@ -72,5 +72,9 @@ export default {
     left: 0;
     right: 0;
     z-index: 9;
+  }
+  .tab-control{
+    position: sticky;
+    top:44px;
   }
 </style>

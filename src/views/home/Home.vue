@@ -45,8 +45,12 @@ export default {
   data(){
     return {
       banners:[],
-      recommends:[]
-      
+      recommends:[],
+      goods:{
+        pop:{},
+        news:{},
+        news:{},
+      }
     }
   },
   created(){
@@ -54,7 +58,7 @@ export default {
     getHomeMultidata().then(res=>{
         this.banners=res.data.banner.list
         this.recommends=res.data.recommend.list
-        console.log(this.banners,this.recommends)
+        // console.log(this.banners,this.recommends)
     })
   }
 }

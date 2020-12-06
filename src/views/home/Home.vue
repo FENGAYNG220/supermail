@@ -13,7 +13,8 @@
     <recommend-view :recommends='recommends'/>
     <feature-view/>
     <tab-control class="tab-control" :titles="['流行','新款','精选']"/>
-    <div style="width:100%;height:1000px;background:yellowgreen;">111</div>
+    <goods-list :goods="goods['pop'].list"></goods-list>
+    <div style="width:100%;height:1000px;background:pink;">111</div>
   </div>
 </template>
 
@@ -24,6 +25,7 @@ import FeatureView from './childComps/FeatureView'
 
 import NavBar from "components/common/navbar/NavBar"
 import TabControl from "components/content/tabControl/TabControl"
+import GoodsList from "components/content/goods/GoodsList";
 
 
 import {getHomeMultidata,getHomeGoods} from "network/home"
@@ -39,7 +41,8 @@ export default {
     RecommendView,
     FeatureView,
     NavBar,
-    TabControl
+    TabControl,
+    GoodsList
 
   },
   data(){
@@ -47,7 +50,7 @@ export default {
       banners:[],
       recommends:[],
       goods:{
-        pop:{page:0,list:[]},
+        pop:{page:0,list:[{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'}]},
         news:{page:0,list:[]},
         sell:{page:0,list:[]},
       }
@@ -105,5 +108,6 @@ export default {
   .tab-control{
     position: sticky;
     top:44px;
+    z-index: 9;
   }
 </style>

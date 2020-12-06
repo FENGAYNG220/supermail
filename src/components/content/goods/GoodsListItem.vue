@@ -24,6 +24,7 @@ export default {
 
 <style>
   .goods-item{
+    margin-top:4px;
     padding-bottom: 40px;
     position: relative;
     width: 48%;

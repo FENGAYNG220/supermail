@@ -12,8 +12,8 @@
     <home-swiper :banners='banners'></home-swiper>
     <recommend-view :recommends='recommends'/>
     <feature-view/>
-    <tab-control class="tab-control" :titles="['流行','新款','精选']"/>
-    <goods-list :goods="goods['pop'].list"></goods-list>
+    <tab-control class="tab-control" :titles="['流行','新款','精选']" @tabClick='tabClick'/>
+    <goods-list :goods="showGoods"></goods-list>
     <div style="width:100%;height:1000px;background:pink;">111</div>
   </div>
 </template>
@@ -51,9 +51,20 @@ export default {
       recommends:[],
       goods:{
         pop:{page:0,list:[{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/96908/6/5455/48331/5dedee7bE564464f3/b4d8e15a0a1b2ea8.jpg!q70.dpg.webp'}]},
-        news:{page:0,list:[]},
-        sell:{page:0,list:[]},
-      }
+        news:{page:0,list:[
+          {img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/25993/36/13860/525551/5ca1d4c6E02683b85/e304d51faf23c258.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/25993/36/13860/525551/5ca1d4c6E02683b85/e304d51faf23c258.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/25993/36/13860/525551/5ca1d4c6E02683b85/e304d51faf23c258.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/25993/36/13860/525551/5ca1d4c6E02683b85/e304d51faf23c258.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/25993/36/13860/525551/5ca1d4c6E02683b85/e304d51faf23c258.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/25993/36/13860/525551/5ca1d4c6E02683b85/e304d51faf23c258.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/25993/36/13860/525551/5ca1d4c6E02683b85/e304d51faf23c258.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/25993/36/13860/525551/5ca1d4c6E02683b85/e304d51faf23c258.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/25993/36/13860/525551/5ca1d4c6E02683b85/e304d51faf23c258.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/25993/36/13860/525551/5ca1d4c6E02683b85/e304d51faf23c258.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/25993/36/13860/525551/5ca1d4c6E02683b85/e304d51faf23c258.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/25993/36/13860/525551/5ca1d4c6E02683b85/e304d51faf23c258.jpg!q70.dpg.webp'}
+        ]},
+        sell:{page:0,list:[
+          {img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'}
+        ]},
+      },
+      currentType:'pop'
+    }
+  },
+  // goods[currentType].list   太长了，用计算属性
+  computed:{
+    showGoods(){
+      return this.goods[this.currentType].list
     }
   },
   created(){
@@ -73,6 +84,19 @@ export default {
     // })
   },
   methods:{
+    /***事件监听相关的方法***/
+    tabClick(index){
+      console.log(index);
+      switch(index){
+        case 0:this.currentType='pop'
+        break;
+        case 1:this.currentType='news'
+        break;
+        case 2:this.currentType='sell'
+        break;
+      }
+    },
+    /***网络请求先相关的方法**/
     getHomeMultidata(){
       getHomeMultidata().then(res=>{
         this.banners=res.data.banner.list

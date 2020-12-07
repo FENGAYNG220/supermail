@@ -9,12 +9,22 @@
         </a>
       </swiper-item>
     </swiper> -->
-    <home-swiper :banners='banners'></home-swiper>
-    <recommend-view :recommends='recommends'/>
-    <feature-view/>
-    <tab-control class="tab-control" :titles="['流行','新款','精选']" @tabClick='tabClick'/>
-    <goods-list :goods="showGoods"></goods-list>
-    <div style="width:100%;height:1000px;background:pink;">111</div>
+    <scroll class='content'>
+      <home-swiper :banners='banners'></home-swiper>
+      <recommend-view :recommends='recommends'/>
+      <feature-view/>
+      <tab-control class="tab-control" :titles="['流行','新款','精选']" @tabClick='tabClick'/>
+      <goods-list :goods="showGoods"></goods-list>
+   
+    </scroll>
+    <div style="width:100%;height:1000px;background:pink;"></div>
+    <!-- 放到scroll 里 -->
+      <!-- <home-swiper :banners='banners'></home-swiper>
+      <recommend-view :recommends='recommends'/>
+      <feature-view/>
+      <tab-control class="tab-control" :titles="['流行','新款','精选']" @tabClick='tabClick'/>
+      <goods-list :goods="showGoods"></goods-list>
+      <div style="width:100%;height:1000px;background:pink;">111</div> -->
   </div>
 </template>
 
@@ -26,7 +36,7 @@ import FeatureView from './childComps/FeatureView'
 import NavBar from "components/common/navbar/NavBar"
 import TabControl from "components/content/tabControl/TabControl"
 import GoodsList from "components/content/goods/GoodsList";
-
+import Scroll from "components/common/scroll/Scroll"
 
 import {getHomeMultidata,getHomeGoods} from "network/home"
 // import { Swiper, SwiperItem } from "components/common/swiper";
@@ -42,7 +52,9 @@ export default {
     FeatureView,
     NavBar,
     TabControl,
-    GoodsList
+    GoodsList,
+    // 封装scroll
+     Scroll
 
   },
   data(){
@@ -116,9 +128,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
    #home{
-    padding-top: 44px;
+    /* padding-top: 44px; */   /*要注释 要不然影响视口高度*/
+    height: 100vh; 
+    /* 视口的高度 */
    }
   .home-nav{
     background-color:var(--color-tint);
@@ -133,5 +147,19 @@ export default {
     position: sticky;
     top:44px;
     z-index: 9;
+  }
+  .content{
+    /* height: 100%; */
+    height:calc(100% - 93px);
+    overflow: hidden;
+    margin-top: 44px;
+    /* 一种方式 */
+
+    /* 另一种定位 */
+    /* position: absolute;
+    top:44px;
+    bottom: 49px;
+    left: 0;
+    right: 0; */
   }
 </style>

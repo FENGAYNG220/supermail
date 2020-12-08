@@ -9,7 +9,7 @@
         </a>
       </swiper-item>
     </swiper> -->
-    <scroll class='content' ref='scroll'>
+    <scroll class='content' ref='scroll' :probe-type="3" @scroll="contentScroll"> <!-- 不加 ：是字符串，加了是数值类型-->
       <home-swiper :banners='banners'></home-swiper>
       <recommend-view :recommends='recommends'/>
       <feature-view/>
@@ -17,7 +17,7 @@
       <goods-list :goods="showGoods"></goods-list>
      
     </scroll>
-    <back-top @click.native='backClick'></back-top>
+    <back-top @click.native='backClick' v-show='isShowBackTop'></back-top>
     <!-- <div style="width:100%;height:1000px;background:pink;"></div> -->
     <!-- 放到scroll 里 -->
       <!-- <home-swiper :banners='banners'></home-swiper>
@@ -75,7 +75,8 @@ export default {
           {img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'},{img:'http://img13.360buyimg.com/mobilecms/s372x372_jfs/t1/123002/40/13036/140604/5f645fa7Ef8d4bf8f/1064d4f70d59004c.jpg!q70.dpg.webp'}
         ]},
       },
-      currentType:'pop'
+      currentType:'pop',
+      isShowBackTop:false
     }
   },
   // goods[currentType].list   太长了，用计算属性
@@ -125,14 +126,19 @@ export default {
       const page=this.goods[type].page+1
        getHomeGoods(type,page).then(res=>{
       //  console.log(res)
-      this.goods[type].list.push( ...res.data.list)
-      this.goods[page]+=1
+      // 接口有问题
+      // this.goods[type].list.push( ...res.data.list)
+      // this.goods[page]+=1
     })
     },
     backClick(){
       console.log('返回顶部按钮内被点击了')
       // this.$refs.scroll.scroll.scrollTo(0,0,1000)   太长了  
-      this.$refs.scroll.scrollTo(0,0)  // 封装了一下  这样处理逻辑只是scroll提供的
+      this.$refs.scroll.scrollTo(0,0)  // 封装scrollTo方法    处理逻辑只是scroll提供的 
+    },
+    contentScroll(position){
+      // console.log(position)
+        this.isShowBackTop=-position.y >1000
     }
   }
 }

@@ -9,7 +9,14 @@
         </a>
       </swiper-item>
     </swiper> -->
-    <scroll class='content' ref='scroll' :probe-type="3" @scroll="contentScroll"> <!-- 不加 ：是字符串，加了是数值类型-->
+    <scroll 
+      class='content' 
+      ref='scroll' 
+      :probe-type="3"   
+      @scroll="contentScroll"
+      :pull-up-load='true'  
+      @pullingUp='loadMore'
+      > <!-- 不加 ：是字符串，加了是数值类型   bool值-->
       <home-swiper :banners='banners'></home-swiper>
       <recommend-view :recommends='recommends'/>
       <feature-view/>
@@ -76,7 +83,10 @@ export default {
         ]},
       },
       currentType:'pop',
-      isShowBackTop:false
+      //是否显示返回顶部的按钮
+      isShowBackTop:false,
+      BackTopList:[{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'}]
+      // ['http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp']
     }
   },
   // goods[currentType].list   太长了，用计算属性
@@ -123,12 +133,14 @@ export default {
     })
     },
     getHomeGoods(type){
+    
       const page=this.goods[type].page+1
        getHomeGoods(type,page).then(res=>{
       //  console.log(res)
       // 接口有问题
-      // this.goods[type].list.push( ...res.data.list)
-      // this.goods[page]+=1
+      this.goods[type].list.push( ...this.BackTopList)
+      this.goods[page]+=1
+      this.$refs.scroll.finishPullUp()
     })
     },
     backClick(){
@@ -139,11 +151,20 @@ export default {
     contentScroll(position){
       // console.log(position)
         this.isShowBackTop=-position.y >1000
+    },
+    //上拉加载更多
+    loadMore(){
+      console.log('上拉加载更多')
+      //针对类型需要加载更多
+      this.getHomeGoods(this.currentType)
+      // 问题:往下滚动时，异步加载图片，不能在滚动了
+      // 可滚动区域 计算好了，图片异步加载还没有过来，异步加载完成，可滚动区域变高,但是不知道，需要去刷新，才能重新计算
+      this.$refs.scroll.scroll.refresh(); //最新可滚动的高度
     }
   }
 }
 </script>
-
+s
 <style scoped>
    #home{
     /* padding-top: 44px; */   /*要注释 要不然影响视口高度*/

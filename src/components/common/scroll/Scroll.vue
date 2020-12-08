@@ -23,7 +23,7 @@ export default {
     //  vue中尽量少用document.querySelector ，不能明确指定拿到是的谁  用ref
     console.log(this.$refs.wrapper)
     this.scroll = new BScroll(this.$refs.wrapper,{
-
+      click:true
     })
   }
 }

@@ -9,15 +9,16 @@
         </a>
       </swiper-item>
     </swiper> -->
-    <scroll class='content'>
+    <scroll class='content' ref='scroll'>
       <home-swiper :banners='banners'></home-swiper>
       <recommend-view :recommends='recommends'/>
       <feature-view/>
       <tab-control class="tab-control" :titles="['流行','新款','精选']" @tabClick='tabClick'/>
       <goods-list :goods="showGoods"></goods-list>
-   
+     
     </scroll>
-    <div style="width:100%;height:1000px;background:pink;"></div>
+    <back-top @click.native='backClick'></back-top>
+    <!-- <div style="width:100%;height:1000px;background:pink;"></div> -->
     <!-- 放到scroll 里 -->
       <!-- <home-swiper :banners='banners'></home-swiper>
       <recommend-view :recommends='recommends'/>
@@ -37,6 +38,8 @@ import NavBar from "components/common/navbar/NavBar"
 import TabControl from "components/content/tabControl/TabControl"
 import GoodsList from "components/content/goods/GoodsList";
 import Scroll from "components/common/scroll/Scroll"
+// backTop 返回顶部
+import BackTop from 'components/content/backTop/BackTop'
 
 import {getHomeMultidata,getHomeGoods} from "network/home"
 // import { Swiper, SwiperItem } from "components/common/swiper";
@@ -54,7 +57,9 @@ export default {
     TabControl,
     GoodsList,
     // 封装scroll
-     Scroll
+     Scroll,
+    //封装返回顶层组件
+     BackTop
 
   },
   data(){
@@ -123,6 +128,10 @@ export default {
       this.goods[type].list.push( ...res.data.list)
       this.goods[page]+=1
     })
+    },
+    backClick(){
+      console.log('返回顶部按钮内被点击了')
+      this.$refs.scroll.scroll.scrollTo(0,0,1000)  
     }
   }
 }
@@ -150,16 +159,16 @@ export default {
   }
   .content{
     /* height: 100%; */
-    height:calc(100% - 93px);
+    /* height:calc(100% - 93px);
     overflow: hidden;
-    margin-top: 44px;
+    margin-top: 44px; */
     /* 一种方式 */
 
     /* 另一种定位 */
-    /* position: absolute;
+    position: absolute;
     top:44px;
     bottom: 49px;
     left: 0;
-    right: 0; */
+    right: 0;
   }
 </style>

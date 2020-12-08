@@ -131,7 +131,8 @@ export default {
     },
     backClick(){
       console.log('返回顶部按钮内被点击了')
-      this.$refs.scroll.scroll.scrollTo(0,0,1000)  
+      // this.$refs.scroll.scroll.scrollTo(0,0,1000)   太长了  
+      this.$refs.scroll.scrollTo(0,0)  // 封装了一下  这样处理逻辑只是scroll提供的
     }
   }
 }

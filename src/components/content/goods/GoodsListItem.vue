@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item">
-    <img :src="goodsItem.img" alt="">
+    <img :src="goodsItem.img" alt="" @load="imageLoad">
     <div class="goods-info">
       <p>宫崎骏,Hayao Miyazaki, 宫崎小时候就擅长绘画,非常喜欢手塚治虫和浦茂的漫画作品。宫崎小时候就擅长绘画</p>
       <span class='price'>99.99</span>
@@ -17,6 +17,12 @@ export default {
       default(){
         return {}
       }
+    }
+  },
+  methods:{
+    imageLoad(){
+      this.$bus.$emit('itemImageLoad')
+      console.log(this.$bus)
     }
   }
 }

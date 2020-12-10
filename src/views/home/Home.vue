@@ -110,7 +110,12 @@ export default {
     // getHomeGoods('pop',1).then(res=>{
     //   console.log(res)
     // })
-  },
+    //3.监听item中的图片加载完成
+    this.$bus.$on('itemImageLoad',()=>{
+      console.log('--图片加载完了--')
+      this.$refs.scroll.refresh()
+    })
+},
   methods:{
     /***事件监听相关的方法***/
     tabClick(index){
@@ -159,7 +164,7 @@ export default {
       this.getHomeGoods(this.currentType)
       // 问题:往下滚动时，异步加载图片，不能在滚动了
       // 可滚动区域 计算好了，图片异步加载还没有过来，异步加载完成，可滚动区域变高,但是不知道，需要去刷新，才能重新计算
-      this.$refs.scroll.scroll.refresh(); //最新可滚动的高度
+      // this.$refs.scroll.scroll.refresh(); //最新可滚动的高度
     }
   }
 }

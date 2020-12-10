@@ -111,11 +111,18 @@ export default {
     //   console.log(res)
     // })
     //3.监听item中的图片加载完成
-    this.$bus.$on('itemImageLoad',()=>{
-      console.log('--图片加载完了--')
+    // this.$bus.$on('itemImageLoad',()=>{
+    //   console.log('-----图片加载完了------')
+    //   this.$refs.scroll.refresh()
+    // })
+  },
+  mounted(){
+     //3.监听item中的图片加载完成   写在created 有时元素拿不到
+      this.$bus.$on('itemImageLoad',()=>{
+      console.log('-----图片加载完了------')
       this.$refs.scroll.refresh()
     })
-},
+  },
   methods:{
     /***事件监听相关的方法***/
     tabClick(index){

@@ -55,13 +55,15 @@ export default {
   },
   methods:{
     scrollTo(x,y,time=300){
-      this.scroll.scrollTo(x,y,time)
+      this.scroll && this.scroll.scrollTo(x,y,time)
+     // this.scroll.scrollTo(x,y,time) 不严谨
     },
     finishPullUp(){
       this.scroll.finishPullUp()
     },
     refresh(){
-      this.scroll.refresh()
+      this.scroll && this.scroll.refresh()
+      // this.scroll.refresh()  不严谨
     }
 
 

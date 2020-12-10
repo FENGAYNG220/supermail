@@ -22,7 +22,7 @@ export default {
   methods:{
     imageLoad(){
       this.$bus.$emit('itemImageLoad')
-      console.log(this.$bus)
+      // console.log(this.$bus)
     }
   }
 }

@@ -50,7 +50,7 @@ import BackTop from 'components/content/backTop/BackTop'
 
 import {getHomeMultidata,getHomeGoods} from "network/home"
 // import { Swiper, SwiperItem } from "components/common/swiper";
-
+import {debuonce} from 'common/utils'
         
 export default {
   components:{
@@ -117,10 +117,17 @@ export default {
     // })
   },
   mounted(){
+    //4.2 防抖包装
+      const refresh=debuonce(this.$refs.scroll.refresh,500)
+
+
      //3.监听item中的图片加载完成   写在created 有时元素拿不到
       this.$bus.$on('itemImageLoad',()=>{
-      console.log('-----图片加载完了------')
-      this.$refs.scroll.refresh()
+      // console.log('-----图片加载完了------')
+      //4.操作太频繁了，服务器压力太大了  要优化
+     //4.3  调用返回值的函数
+      // this.$refs.scroll.refresh()
+      refresh()
     })
   },
   methods:{
@@ -166,13 +173,23 @@ export default {
     },
     //上拉加载更多
     loadMore(){
-      console.log('上拉加载更多')
+      // console.log('上拉加载更多')
       //针对类型需要加载更多
       this.getHomeGoods(this.currentType)
       // 问题:往下滚动时，异步加载图片，不能在滚动了
       // 可滚动区域 计算好了，图片异步加载还没有过来，异步加载完成，可滚动区域变高,但是不知道，需要去刷新，才能重新计算
       // this.$refs.scroll.scroll.refresh(); //最新可滚动的高度
-    }
+    },
+    // 4.1 封装防抖函数  放到了 common下的utils.js下
+    // debuonce(func,delay){
+    //   let timer=null
+    //   return function(...args){
+    //     if(timer) clearTimeout(timer)
+    //     timer=setTimeout(() => {
+    //       func.apply(this,args)
+    //     }, delay);
+    //   }
+    // }
   }
 }
 </script>

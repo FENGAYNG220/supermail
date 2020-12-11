@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 Vue.use(Router)
+
 const Home = ()=>import('views/home/Home')
 const Cart = ()=>import('views/cart/Cart')
 const Profile = ()=>import('views/profile/Profile')

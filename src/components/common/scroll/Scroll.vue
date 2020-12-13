@@ -51,7 +51,7 @@ export default {
       // 业务逻辑能不能在这里处理的，需要传出去的，你需要加载更多
       this.$emit('pullingUp')
     })
-    console.log(this.scroll)
+    // console.log(this.scroll)
   },
   methods:{
     scrollTo(x,y,time=300){

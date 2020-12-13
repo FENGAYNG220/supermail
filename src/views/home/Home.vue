@@ -1,6 +1,12 @@
 <template>
   <div id='home'>
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
+    <tab-control ref='tabControl1' 
+                   class="tab-control" 
+                  :titles="['流行','新款','精选']" 
+                  @tabClick='tabClick'
+                  v-show="isTabFixed"
+                  />
     <!-- 重新封装抽取 -->
     <!-- <swiper>
       <swiper-item v-for="item in banners" :key="item.title">
@@ -17,10 +23,16 @@
       :pull-up-load='true'  
       @pullingUp='loadMore'
       > <!-- 不加 ：是字符串，加了是数值类型   bool值-->
-      <home-swiper :banners='banners'></home-swiper>
+      <home-swiper :banners='banners'   @swiperImageLoad='swiperImageLoad'></home-swiper>
       <recommend-view :recommends='recommends'/>
       <feature-view/>
-      <tab-control class="tab-control" :titles="['流行','新款','精选']" @tabClick='tabClick'/>
+      <!-- 复制一份 -->
+      <tab-control ref='tabControl2' 
+                  :titles="['流行','新款','精选']" 
+                  @tabClick='tabClick'
+                  
+                  />
+                  <!-- :class='{fixed:isTabFixed}'  写在tab-control 里有问题-->
       <goods-list :goods="showGoods"></goods-list>
      
     </scroll>
@@ -85,9 +97,14 @@ export default {
       currentType:'pop',
       //是否显示返回顶部的按钮
       isShowBackTop:false,
-      BackTopList:[{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'}]
+      BackTopList:[{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'}],
       // ['http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp']
+
+      TabOffsetTop:0,
+      //距离顶部的距离
+      isTabFixed:false
     }
+    
   },
   // goods[currentType].list   太长了，用计算属性
   computed:{
@@ -117,6 +134,8 @@ export default {
     // })
   },
   mounted(){
+
+   
     //4.2 防抖包装
       const refresh=debuonce(this.$refs.scroll.refresh,500)
 
@@ -129,6 +148,12 @@ export default {
       // this.$refs.scroll.refresh()
       refresh()
     })
+    // 5 获取tabOffsetTop的offsetTop
+    //所有组件都有一个属性$el ：获取组件中的元素
+    //this.$refs.tabControl.$el.offsetTop  不准，图片还没有加载完
+    // 监听图片是加载完
+    // this.TabOffsetTop=this.$refs.tabControl
+    // console.log(this.$refs.tabControl.$el.offsetTop)
   },
   methods:{
     /***事件监听相关的方法***/
@@ -142,6 +167,8 @@ export default {
         case 2:this.currentType='sell'
         break;
       }
+      this.$refs.tabControl1.currentIndex=index
+      this.$refs.tabControl2.currentIndex=index
     },
     /***网络请求先相关的方法**/
     getHomeMultidata(){
@@ -169,7 +196,12 @@ export default {
     },
     contentScroll(position){
       // console.log(position)
+      
+      //1.判断BackTop是否显示
         this.isShowBackTop=-position.y >1000
+      //吸顶效果逻辑实现
+      //2.决定tabControl是否吸顶（position:fixed）  
+      this.isTabFixed=(-position.y) > this.TabOffsetTop
     },
     //上拉加载更多
     loadMore(){
@@ -190,6 +222,9 @@ export default {
     //     }, delay);
     //   }
     // }
+    swiperImageLoad(){
+      this.TabOffsetTop=this.$refs.tabControl2.$el.offsetTop
+    }
   }
 }
 </script>
@@ -203,17 +238,18 @@ s
   .home-nav{
     background-color:var(--color-tint);
     color: #fff;
-    position: fixed;
+    /* 在使用原生滚动时，为了让导航不跟随一起滚动 */
+    /* position: fixed;
     top:0;
     left: 0;
     right: 0;
-    z-index: 9;
+    z-index: 9; */
   }
-  .tab-control{
-    position: sticky;
+  /* .tab-control{
+    position: sticky;    用better-scroll已经不起作用了 
     top:44px;
     z-index: 9;
-  }
+  } */
   .content{
     /* height: 100%; */
     /* height:calc(100% - 93px);
@@ -227,5 +263,19 @@ s
     bottom: 49px;
     left: 0;
     right: 0;
+    overflow: hidden;
   }
+  /* 吸顶的样式 */
+  .tab-control{
+    position: relative;
+    z-index: 9;
+  }
+  /* 有问题，better-scroll 内容问题，也会随着translate往上滚动 */
+  /* .fixed{
+    position:fixed;
+    top: 44px;
+    right: 0;
+    left: 0;
+    z-index:100;
+  } */
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click='itemClick'>
     <img :src="goodsItem.img" alt="" @load="imageLoad">
     <div class="goods-info">
       <p>宫崎骏,Hayao Miyazaki, 宫崎小时候就擅长绘画,非常喜欢手塚治虫和浦茂的漫画作品。宫崎小时候就擅长绘画</p>
@@ -19,10 +19,20 @@ export default {
       }
     }
   },
+  data(){
+   return {
+      lid:2
+   }
+  },
   methods:{
     imageLoad(){
       this.$bus.$emit('itemImageLoad')
       // console.log(this.$bus)
+    },
+    itemClick(){
+      console.log('跳转到我们详情页')
+      //goodsItem.lid
+      this.$router.push('/detail/'+this.lid)
     }
   }
 }

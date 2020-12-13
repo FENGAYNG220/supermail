@@ -102,7 +102,9 @@ export default {
 
       TabOffsetTop:0,
       //距离顶部的距离
-      isTabFixed:false
+      isTabFixed:false,
+      //保存离开时的距离
+      saveY:0
     }
     
   },
@@ -111,6 +113,20 @@ export default {
     showGoods(){
       return this.goods[this.currentType].list
     }
+  },
+  destroyed(){
+    //路由有keep-alive 组件不能销毁
+    console.log('HomeComponents destroyed')
+  },
+  activated(){
+   this.$refs.scroll.scrollTo(0,this.saveY,0)
+   this.$refs.scroll.refresh()
+  },
+  deactivated(){
+  //封装一下
+  //  this.saveY=this.$refs.scroll.scroll.y;
+      this.saveY=this.$refs.scroll.getScrollY()
+      
   },
   created(){
     //1.请求多个数据 和这个函数比较特殊的，写主要逻辑  

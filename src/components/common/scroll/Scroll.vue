@@ -65,6 +65,9 @@ export default {
       console.log('----------')
       this.scroll && this.scroll.refresh()
       // this.scroll.refresh()  不严谨
+    },
+    getScrollY(){
+      return this.scroll ?this.scroll.y : 0
     }
 
 

@@ -40,7 +40,7 @@ export default {
       //1.将我们时间戳转化为date对象
       const date=new Date(value*1000)
       //2.将date进行格式化
-      console.log(date)
+      // console.log(date)
       return formatDate(date,'yyyy-MM-dd')
     }
   }

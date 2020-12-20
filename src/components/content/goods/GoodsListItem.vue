@@ -24,6 +24,12 @@ export default {
       lid:2
    }
   },
+  //组件的复用
+  computed:{
+    showImage(){
+      return this.product.image || this.goodsItem.img
+    }
+  },
   methods:{
     imageLoad(){
       this.$bus.$emit('itemImageLoad')
@@ -38,7 +44,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .goods-item{
     margin-top:4px;
     padding-bottom: 40px;

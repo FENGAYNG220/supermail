@@ -7,6 +7,13 @@ export function getDetail(id){
     }
   })
 }
+
+//请求数据
+export function getRecommend(){
+  return request({
+    url:'/recommend'
+  })
+}
 export class Goods{
   //没有数据 我就不写了的
   constructor(){

@@ -97,7 +97,7 @@ export default {
       currentType:'pop',
       //是否显示返回顶部的按钮
       isShowBackTop:false,
-      BackTopList:[{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'}],
+      BackTopList:[{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp',},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'},{img:'http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp'}],
       // ['http://img14.360buyimg.com/mobilecms/s372x372_jfs/t1/113454/16/2260/396838/5ea136a8E576566a8/e9fc93e2c32b0891.png.webp']
 
       TabOffsetTop:0,
@@ -119,10 +119,13 @@ export default {
     console.log('HomeComponents destroyed')
   },
   activated(){
+    console.log('Home 进入')  //设置位置
+    
    this.$refs.scroll.scrollTo(0,this.saveY,0)
    this.$refs.scroll.refresh()
   },
   deactivated(){
+     console.log('Home 离开')   // 离开记录位置
   //封装一下
   //  this.saveY=this.$refs.scroll.scroll.y;
       this.saveY=this.$refs.scroll.getScrollY()

@@ -8,6 +8,7 @@
       <detail-shop-info :shop='shop'/>
       <detail-goods-info :detail-info='detailInfo' @imageLoad='imageLoad'/>
       <detail-param-info :param-info='paramInfo'/>
+      <detail-comment-info :comment-info='commentInfo'/>
     </scroll>
     
   </div>
@@ -20,6 +21,7 @@ import DetailBaseInfo from './childComps/DetailBaseInfo'
 import DetailShopInfo from './childComps/DetailShopInfo'
 import DetailGoodsInfo from './childComps/DetailGoodsInfo'
 import DetailParamInfo from './childComps/DetailParamInfo'
+import DetailCommentInfo from './childComps/DetailCommentInfo'
 
 import Scroll from 'components/common/scroll/Scroll'
 
@@ -33,8 +35,11 @@ export default {
     DetailShopInfo,
     DetailGoodsInfo,
     DetailParamInfo,
+    DetailCommentInfo,
+
 
     Scroll
+
   },
   data(){
     return {
@@ -43,7 +48,10 @@ export default {
       goods:{},
       shop:{},
       detailInfo:{},
-      paramInfo:{}
+      paramInfo:{},
+      //评论模块
+      commentInfo:{}
+
     }
   },
   created(){
@@ -84,6 +92,18 @@ export default {
           'http://img30.360buyimg.com/popWareDetail/jfs/t1/137233/15/8925/177205/5f4c997aE1b536d4b/44a1e09b1cc22642.jpg!q70.dpg.webp'
         ]}]},
         this.paramInfo=new  GoodsParams()
+        //3.5取出评论信息
+        // 做个判断  是否有信息
+        // 假数据写死的
+        if(res){
+          this.commentInfo={
+              user:{avatar:'http://storage.360buyimg.com/i.imageUpload/6a645f3666623763313366633331333731343838303232383935363033_sma.jpg',name:'棒棒糖闯江湖'},
+              content:'手表质量很好，做工精致，工艺精良，细节处理的很好，防水性能好，走时精准，外观美观大方，客服服务态度好，耐心解答问题，很满意。',
+              created:'1535694719',
+              style:'颜色:上衣+裤子 尺码:M',
+              images:['http://img30.360buyimg.com/shaidan/s128x96_jfs/t1/142783/3/9532/53857/5f72919fEad944a94/7567a780f83e51c2.jpg!cc_100x100!q70.dpg.webp','http://img30.360buyimg.com/shaidan/s128x96_jfs/t1/111083/29/19096/65655/5f7291a0E4ac5d08c/8983307cfbf07973.jpg!cc_100x100!q70.dpg.webp','http://img30.360buyimg.com/shaidan/s128x96_jfs/t1/152099/22/1113/80816/5f7291a0Eca44fab1/1a77776bf306aa3d.jpg!cc_100x100!q70.dpg.webp']
+          }
+        }
     })
   },
   methods:{

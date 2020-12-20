@@ -31,6 +31,8 @@ import Scroll from 'components/common/scroll/Scroll'
 import GoodsList from 'components/content/goods/GoodsList'
 
 import {getDetail,Goods,Shop,GoodsParams,getRecommend} from 'network/detail'
+import {debuonce} from 'common/utils'
+import {itemListenerMixin} from 'common/mixin'
 
 export default {
   components:{
@@ -47,6 +49,7 @@ export default {
     Scroll
 
   },
+  mounted:[itemListenerMixin],
   data(){
     return {
       id:null,
@@ -58,7 +61,8 @@ export default {
       //评论模块
       commentInfo:{},
       //保存推荐数据
-      recommends:[]
+      recommends:[],
+      homeImgListener:null
 
     }
   },
@@ -118,6 +122,19 @@ export default {
       console.log('请求推荐数据')
       this.recommends=[{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/150391/23/11687/380579/5fdc0547Ed5e64af2/3d4dac92f79ed95b.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/154891/21/10382/264279/5fdbba45Eaa4fff99/3e412ce1cb271e7f.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t18325/65/199693094/405715/6f845190/5a61d111N0e4f0567.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/145306/32/15357/233157/5fb9eb5eEec1062c3/1a0ee25bcd66c544.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/147240/26/1802/246082/5efbfe75E8e81f7bd/dad511fa9851f79f.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/143293/37/18645/335700/5fdbba4dE0c7af7e1/02bcd50f8c4ec0e9.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/150021/34/18241/548309/5fd5f516E387c882c/61a3cbbab69d2152.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/51806/31/10868/174560/5d7dfc6fE02965d93/c4a5bc481635f8d0.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/148181/32/7160/170489/5f4ca31cE63655fb2/4af1676de5627cbd.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/120632/9/4127/126488/5ed9c291Ecd68f259/92d589ca97daf47a.jpg!q70.dpg.webp'}]
     })
+  },
+
+  mounted(){
+    // this.homeImgListener=()=>{
+     
+    //    refresh()
+    // }
+    // const refresh=debuonce(this.$refs.scroll.refresh,500)
+    // this.$bus.$on('itemImgLoad', this.homeImgListener)
+  },
+ 
+  destroyed(){
+     this.$bus.$off('itemImageLoad',this. homeImgListener)    
   },
   methods:{
     imageLoad(){

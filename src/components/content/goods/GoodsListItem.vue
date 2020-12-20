@@ -31,6 +31,9 @@ export default {
     }
   },
   methods:{
+    //现在  公用一个组件,需要发送事件,home和detail也学要监听  要不然滚动有问题
+    //解决:可以用路由不同发送不同的路由去刷新
+    //this.$route.path.indexOf('/home')  this.$route.path.indexOf('/detail') 发出不同的事件 
     imageLoad(){
       this.$bus.$emit('itemImageLoad')
       // console.log(this.$bus)

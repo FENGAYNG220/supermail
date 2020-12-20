@@ -63,6 +63,7 @@ import BackTop from 'components/content/backTop/BackTop'
 import {getHomeMultidata,getHomeGoods} from "network/home"
 // import { Swiper, SwiperItem } from "components/common/swiper";
 import {debuonce} from 'common/utils'
+import {itemListenerMixin} from 'common/mixin'
         
 export default {
   components:{
@@ -81,6 +82,7 @@ export default {
      BackTop
 
   },
+  mounted:[itemListenerMixin],
   data(){
     return {
       banners:[],
@@ -104,7 +106,9 @@ export default {
       //距离顶部的距离
       isTabFixed:false,
       //保存离开时的距离
-      saveY:0
+      saveY:0,
+      //全局事件  抽离
+      homeImgListener:null
     }
     
   },
@@ -128,8 +132,10 @@ export default {
      console.log('Home 离开')   // 离开记录位置
   //封装一下
   //  this.saveY=this.$refs.scroll.scroll.y;
+  // 保存Y值
       this.saveY=this.$refs.scroll.getScrollY()
-      
+  // 取消全局事件
+    this.$bus.$off('itemImageLoad',this. homeImgListener)      
   },
   created(){
     //1.请求多个数据 和这个函数比较特殊的，写主要逻辑  
@@ -156,17 +162,19 @@ export default {
 
    
     //4.2 防抖包装
-      const refresh=debuonce(this.$refs.scroll.refresh,500)
-
-
-     //3.监听item中的图片加载完成   写在created 有时元素拿不到
-      this.$bus.$on('itemImageLoad',()=>{
+/*      const refresh=debuonce(this.$refs.scroll.refresh,500)
+        //对监听的函数进行保存 
+      this. homeImgListener=()=>{
       // console.log('-----图片加载完了------')
       //4.操作太频繁了，服务器压力太大了  要优化
      //4.3  调用返回值的函数
       // this.$refs.scroll.refresh()
       refresh()
-    })
+    }
+
+     //3.监听item中的图片加载完成   写在created 有时元素拿不到
+      this.$bus.$on('itemImageLoad',this. homeImgListener)
+  */
     // 5 获取tabOffsetTop的offsetTop
     //所有组件都有一个属性$el ：获取组件中的元素
     //this.$refs.tabControl.$el.offsetTop  不准，图片还没有加载完

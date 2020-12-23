@@ -81,8 +81,8 @@ export default {
     //封装返回顶层组件
      BackTop
 
-  },
-  mounted:[itemListenerMixin],
+  }, 
+  mixin:[itemListenerMixin],
   data(){
     return {
       banners:[],
@@ -106,9 +106,9 @@ export default {
       //距离顶部的距离
       isTabFixed:false,
       //保存离开时的距离
-      saveY:0,
+      saveY:0
       //全局事件  抽离
-      homeImgListener:null
+      // homeImgListener:null
     }
     
   },
@@ -162,7 +162,7 @@ export default {
 
    
     //4.2 防抖包装
-/*      const refresh=debuonce(this.$refs.scroll.refresh,500)
+      const refresh=debuonce(this.$refs.scroll.refresh,500)
         //对监听的函数进行保存 
       this. homeImgListener=()=>{
       // console.log('-----图片加载完了------')
@@ -174,7 +174,6 @@ export default {
 
      //3.监听item中的图片加载完成   写在created 有时元素拿不到
       this.$bus.$on('itemImageLoad',this. homeImgListener)
-  */
     // 5 获取tabOffsetTop的offsetTop
     //所有组件都有一个属性$el ：获取组件中的元素
     //this.$refs.tabControl.$el.offsetTop  不准，图片还没有加载完

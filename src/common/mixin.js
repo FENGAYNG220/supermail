@@ -4,7 +4,7 @@ export const itemListenerMixin ={
     return {
       homeImgListener:null
     }
-  },
+  },  
   mounted(){
     const refresh=debuonce(this.$refs.scroll.refresh,500)
     this.homeImgListener=()=>{

@@ -1,8 +1,8 @@
 <template>
   <div id='detail'>
     <!-- 导航栏 -->
-    <detail-nav-bar @titleClick='titleClick'/>
-    <scroll class='content' ref='scroll'>
+    <detail-nav-bar @titleClick='titleClick' ref='nav'/>
+    <scroll class='content' ref='scroll' :probe-type=3 @scroll='contentScroll'>
       <!-- 除了事件监听,解析时属性不区分大小写 发出事件时,不需要区分大小写-->
       <detail-swiper :top-images='topImages'></detail-swiper>
       <detail-base-info :goods='goods'></detail-base-info>
@@ -67,7 +67,9 @@ export default {
       //滚动的Y的值
       themeTopYs:[],
       //做防抖
-      getThemeTopYs:null
+      getThemeTopYs:null,
+      //记录滚动时位置，获取index
+      currentIndex:0
     }
   },
   created(){
@@ -213,7 +215,25 @@ export default {
     titleClick(index){
       // console.log(index)
       this.$refs.scroll.scrollTo(0,-this.themeTopYs[index],500)
-    }
+    },
+    //监听scroll 
+    contentScroll(position){
+    
+      //获取Y值
+      const  positionY=-position.y
+      // console.log(positionY)
+      //主题中的y值 :[0, 11251, 12138, 12452]
+      let length=this.themeTopYs.length
+      for(let i=0;i<length;i++){
+//i<length-1 && positionY >this.themeTopYs[i] && positionY.themeTopYs[i+1])||(i===length-1 && positionY>this.themeTopYs[i])
+        if(this.currentIndex!== i  && ((i<length-1 &&positionY >= this.themeTopYs[i] && positionY < this.themeTopYs[i+1] )||(i===length-1 && positionY >= this.themeTopYs[i] ))){
+         this.currentIndex=i
+        //  console.log( this.currentIndex)
+         this.$refs.nav.currentIndex=this.currentIndex
+        }
+      }
+
+    } 
   }
 }
 </script>

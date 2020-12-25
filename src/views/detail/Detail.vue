@@ -1,15 +1,16 @@
 <template>
   <div id='detail'>
     <!-- 导航栏 -->
-    <detail-nav-bar/>
+    <detail-nav-bar @titleClick='titleClick'/>
     <scroll class='content' ref='scroll'>
+      <!-- 除了事件监听,解析时属性不区分大小写 发出事件时,不需要区分大小写-->
       <detail-swiper :top-images='topImages'></detail-swiper>
       <detail-base-info :goods='goods'></detail-base-info>
       <detail-shop-info :shop='shop'/>
       <detail-goods-info :detail-info='detailInfo' @imageLoad='imageLoad'/>
-      <detail-param-info :param-info='paramInfo'/>
-      <detail-comment-info :comment-info='commentInfo'/>
-      <goods-list :goods="recommends"></goods-list>
+      <detail-param-info ref='parmas' :param-info='paramInfo'/>
+      <detail-comment-info ref='comment' :comment-info='commentInfo'/>
+      <goods-list :goods="recommends" ref='recommends'></goods-list>
     </scroll>
     
   </div>
@@ -61,9 +62,12 @@ export default {
       //评论模块
       commentInfo:{},
       //保存推荐数据
-      recommends:[]
+      recommends:[],
       // homeImgListener:null
-
+      //滚动的Y的值
+      themeTopYs:[],
+      //做防抖
+      getThemeTopYs:null
     }
   },
   created(){
@@ -119,9 +123,50 @@ export default {
     }),
     // 3. 请求推荐数据
     getRecommend().then(res=>{
-      console.log('请求推荐数据')
+      // console.log('请求推荐数据')
       this.recommends=[{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/150391/23/11687/380579/5fdc0547Ed5e64af2/3d4dac92f79ed95b.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/154891/21/10382/264279/5fdbba45Eaa4fff99/3e412ce1cb271e7f.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t18325/65/199693094/405715/6f845190/5a61d111N0e4f0567.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/145306/32/15357/233157/5fb9eb5eEec1062c3/1a0ee25bcd66c544.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/147240/26/1802/246082/5efbfe75E8e81f7bd/dad511fa9851f79f.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/143293/37/18645/335700/5fdbba4dE0c7af7e1/02bcd50f8c4ec0e9.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/150021/34/18241/548309/5fd5f516E387c882c/61a3cbbab69d2152.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/51806/31/10868/174560/5d7dfc6fE02965d93/c4a5bc481635f8d0.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/148181/32/7160/170489/5f4ca31cE63655fb2/4af1676de5627cbd.jpg!q70.dpg.webp'},{img:'http://img14.360buyimg.com/mobilecms/s270x270_jfs/t1/120632/9/4127/126488/5ed9c291Ecd68f259/92d589ca97daf47a.jpg!q70.dpg.webp'}]
+    /*
+    //1.第一次获取，值不对
+      //值不对的原因：this.$refs.parmas.$el 压根没有渲染 
+      this.themeTopYs=[]
+      this.themeTopYs.push(0);
+      this.themeTopYs.push(this.$refs.parmas.$el.offsetTop)
+      this.themeTopYs.push(this.$refs.comment.$el.offsetTop)
+      this.themeTopYs.push(this.$refs.recommends.$el.offsetTop)
+      console.log(this.themeTopYs)
+       
+
+       
+
+       //2.第二次渲染：值不对
+       //值不对的原因：图片
+       //根据最新的数据，对应的DOM是已经被渲染出来了
+       //但是图片依旧是没有加载完的，（目前获取到offsetTop不包含其中的图片）
+       //offsetTop值不对的时候都是因为图片的问题
+      this.$nextTick(()=>{
+      this.themeTopYs=[]
+      this.themeTopYs.push(0);
+      this.themeTopYs.push(this.$refs.parmas.$el.offsetTop)
+      this.themeTopYs.push(this.$refs.comment.$el.offsetTop)
+      this.themeTopYs.push(this.$refs.recommends.$el.offsetTop)
+      console.log(this.themeTopYs)
     })
+
+      */
+
+
+
+  
+    })
+   // 4.给getThemeTopYs赋值  对this.themeTopYs 赋值的操作进行防抖
+   this.getThemeTopYs=debuonce(()=>{
+      this.themeTopYs=[]
+      this.themeTopYs.push(0);
+      this.themeTopYs.push(this.$refs.parmas.$el.offsetTop)
+      this.themeTopYs.push(this.$refs.comment.$el.offsetTop)
+      this.themeTopYs.push(this.$refs.recommends.$el.offsetTop)
+      console.log(this.themeTopYs)
+   },100)
   },
   mounted(){
     // this.homeImgListener=()=>{
@@ -130,6 +175,22 @@ export default {
     // }
     // const refresh=debuonce(this.$refs.scroll.refresh,500)
     // this.$bus.$on('itemImgLoad', this.homeImgListener)
+
+    //获取对应的Y值  拿到数据不正确的，不确定数据是否请求完,还在渲染，拿不到$el
+    // this.themeTopYs.push(0);
+    // this.themeTopYs.push(this.$refs.parmas.$el.offsetTop)
+    // this.themeTopYs.push(this.$refs.comment.$el.offsetTop)
+    // this.themeTopYs.push(this.$refs.recommends.$el.offsetTop)
+    
+  },
+  updated(){
+    
+    // this.themeTopYs=[]
+    // this.themeTopYs.push(0);
+    // this.themeTopYs.push(this.$refs.parmas.$el.offsetTop)
+    // this.themeTopYs.push(this.$refs.comment.$el.offsetTop)
+    // this.themeTopYs.push(this.$refs.recommends.$el.offsetTop)
+    // console.log(this.themeTopYs)
   },
   destroyed(){
      this.$bus.$off('itemImageLoad',this. homeImgListener)    
@@ -138,6 +199,20 @@ export default {
     imageLoad(){
       console.log('图片加载完了')
       this.$refs.scroll.refresh()
+  /*
+      this.themeTopYs=[]
+      this.themeTopYs.push(0);
+      this.themeTopYs.push(this.$refs.parmas.$el.offsetTop)
+      this.themeTopYs.push(this.$refs.comment.$el.offsetTop)
+      this.themeTopYs.push(this.$refs.recommends.$el.offsetTop)
+      console.log(this.themeTopYs)
+  */
+      //操作太频繁了要做防抖
+      this.getThemeTopYs()
+    },
+    titleClick(index){
+      // console.log(index)
+      this.$refs.scroll.scrollTo(0,-this.themeTopYs[index],500)
     }
   }
 }

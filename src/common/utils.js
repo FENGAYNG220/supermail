@@ -1,4 +1,4 @@
-export function debuonce(func,delay){
+export function debuonce(func,delay=100){
   let timer=null
   return function(...args){
     if(timer) clearTimeout(timer)

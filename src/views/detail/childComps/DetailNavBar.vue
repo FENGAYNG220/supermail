@@ -31,6 +31,8 @@ export default {
   methods:{
     titleClick(index){
       this.currentIndex=index
+      //将事件发出去
+      this.$emit('titleClick',index)
     },
     backClick(){
       console.log('详情页点击返回')

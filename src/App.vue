@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- 跳转不同的详情页，不需要缓存 -->
-    <keep-alive exclude="Detail">
+    <keep-alive exclude="/detail">
       <router-view/>
     </keep-alive>
     <main-tabbar/>

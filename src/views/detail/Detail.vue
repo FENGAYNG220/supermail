@@ -12,7 +12,9 @@
       <detail-comment-info ref='comment' :comment-info='commentInfo'/>
       <goods-list :goods="recommends" ref='recommends'></goods-list>
     </scroll>
+    <back-top @click.native='backClick' v-show='isShowBackTop'></back-top>
     <detail-buttom-bar></detail-buttom-bar>
+     
   </div>
 </template>
 
@@ -34,7 +36,7 @@ import GoodsList from 'components/content/goods/GoodsList'
 
 import {getDetail,Goods,Shop,GoodsParams,getRecommend} from 'network/detail'
 import {debuonce} from 'common/utils'
-import {itemListenerMixin} from 'common/mixin'
+import {itemListenerMixin,backTopMixin} from 'common/mixin'
 
 export default {
   components:{
@@ -52,7 +54,7 @@ export default {
     Scroll
 
   },
-  mixin:[itemListenerMixin],
+  mixins:[itemListenerMixin,backTopMixin],
   data(){
     return {
       id:null,
@@ -248,6 +250,8 @@ export default {
         }
       }
 
+      //是否显示回到顶部
+      this.isShowBackTop=-position.y >1000
     } 
   }
 }

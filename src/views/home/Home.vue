@@ -82,7 +82,7 @@ export default {
      BackTop
 
   }, 
-  mixin:[itemListenerMixin],
+  mixins:[itemListenerMixin],
   data(){
     return {
       banners:[],

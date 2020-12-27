@@ -12,7 +12,7 @@
       <detail-comment-info ref='comment' :comment-info='commentInfo'/>
       <goods-list :goods="recommends" ref='recommends'></goods-list>
     </scroll>
-    
+    <detail-buttom-bar></detail-buttom-bar>
   </div>
 </template>
 
@@ -24,6 +24,7 @@ import DetailShopInfo from './childComps/DetailShopInfo'
 import DetailGoodsInfo from './childComps/DetailGoodsInfo'
 import DetailParamInfo from './childComps/DetailParamInfo'
 import DetailCommentInfo from './childComps/DetailCommentInfo'
+import DetailButtomBar from './childComps/DetailButtomBar'
 
 import Scroll from 'components/common/scroll/Scroll'
 
@@ -44,6 +45,7 @@ export default {
     DetailGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
+    DetailButtomBar,
 
     GoodsList,
 
@@ -167,6 +169,8 @@ export default {
       this.themeTopYs.push(this.$refs.parmas.$el.offsetTop)
       this.themeTopYs.push(this.$refs.comment.$el.offsetTop)
       this.themeTopYs.push(this.$refs.recommends.$el.offsetTop)
+      //hack做法
+      this.themeTopYs.push(Number.MAX_VALUE)
       console.log(this.themeTopYs)
    },100)
   },
@@ -224,10 +228,21 @@ export default {
       // console.log(positionY)
       //主题中的y值 :[0, 11251, 12138, 12452]
       let length=this.themeTopYs.length
-      for(let i=0;i<length;i++){
-//i<length-1 && positionY >this.themeTopYs[i] && positionY.themeTopYs[i+1])||(i===length-1 && positionY>this.themeTopYs[i])
-        if(this.currentIndex!== i  && ((i<length-1 &&positionY >= this.themeTopYs[i] && positionY < this.themeTopYs[i+1] )||(i===length-1 && positionY >= this.themeTopYs[i] ))){
+      for(let i=0;i<length-1;i++){
+
+       //普通做法
+     /*   if(this.currentIndex!== i  && ((i<length-1 &&positionY >= this.themeTopYs[i] && positionY < this.themeTopYs[i+1] )||(i===length-1 && positionY >= this.themeTopYs[i] ))){
          this.currentIndex=i
+        //  console.log( this.currentIndex)
+         this.$refs.nav.currentIndex=this.currentIndex
+        }
+
+      */
+
+     //hack做法
+        // Number.MAX_VALUE 加一个最大的值  同时遍历的时候要减去1  要不然 越界了
+        if( this.currentIndex !== i && (positionY>=this.themeTopYs[i] && positionY< this.themeTopYs[i+1])){
+             this.currentIndex=i
         //  console.log( this.currentIndex)
          this.$refs.nav.currentIndex=this.currentIndex
         }
@@ -249,7 +264,7 @@ export default {
     /* 用better-scroll必须给定高度 */
     /* 1.父亲要 height: 100vh;   height: calc(100% - 44px);  */
     /* 2.定位 */
-    height: calc(100% - 44px);
+    height: calc(100% - 44px - 58px);
     overflow: hidden;
   }
 </style>

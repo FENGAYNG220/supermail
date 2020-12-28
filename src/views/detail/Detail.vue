@@ -13,7 +13,7 @@
       <goods-list :goods="recommends" ref='recommends'></goods-list>
     </scroll>
     <back-top @click.native='backClick' v-show='isShowBackTop'></back-top>
-    <detail-buttom-bar></detail-buttom-bar>
+    <detail-buttom-bar @addCart='addToCart'/>
      
   </div>
 </template>
@@ -252,7 +252,19 @@ export default {
 
       //是否显示回到顶部
       this.isShowBackTop=-position.y >1000
-    } 
+    },
+    addToCart(){
+      console.log('发出了添加购物车事件了');
+      //1.获取购物车展示商品信息
+      const product={}
+      product.image=this.topImages[0];
+      product.title=this.goods.title;
+      product.desc=this.goods.desc;
+      product.price=this.goods.realPrice;
+      product.lid=this.id;
+      console.log(product)
+    }
+    
   }
 }
 </script>

@@ -262,7 +262,7 @@ export default {
       console.log('发出了添加购物车事件了');
       //1.获取购物车展示商品信息
       const product={}
-      product.id=this.id;
+      product.id=this.$route.params.id;
       product.image=this.topImages[0];
       product.title=this.goods.title;
       product.desc=this.goods.desc;
@@ -273,8 +273,8 @@ export default {
       //2.将数据添加到购物车中
           // this.$Store.cartList.push(product)  //不要用这种方法
           // mutations 
-      // this.$store.commit('addCart',product)
-      this.$store.dispatch('addCart',product)
+      this.$store.commit('addCart',product)
+      // this.$store.dispatch('addCart',product)
     }
     
   }

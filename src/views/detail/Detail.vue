@@ -273,8 +273,8 @@ export default {
       //2.将数据添加到购物车中
           // this.$Store.cartList.push(product)  //不要用这种方法
           // mutations 
-      this.$store.commit('addCart',product)
-      // this.$store.dispatch('addCart',product)
+      // this.$store.commit('addCart',product)
+      this.$store.dispatch('addCart',product)
     }
     
   }

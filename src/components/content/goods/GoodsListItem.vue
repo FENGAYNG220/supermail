@@ -21,7 +21,7 @@ export default {
   },
   data(){
    return {
-      lid:2
+      lid:Math.floor(Math.random()*10+1)
    }
   },
   //组件的复用

@@ -1,22 +1,43 @@
 <template>
   <div class="cart">
+    <!-- 1.导航 -->
     <nav-bar class="nav-bar">
       <!-- $store.state.cartList.length 太长，用计算属性 购物车({{cartLength}}) -->
       <div slot="center">购物车({{cartLength}})</div>
     </nav-bar>
+    <!-- 2.商品列表 -->
+
+    <!-- 3.底部汇总 -->
   </div>
 </template>
 
 <script>
 import NavBar from 'components/common/navbar/NavBar'
+import {mapGetters} from 'vuex'
+
 export default {
   components:{
     NavBar
   },
   computed:{
+    /*
+    还是太麻烦的，多套了一次的 用新的方法  引入vuex 用mapGetters 
     cartLength(){
-      return this.$store.state.cartList.length
+      // return this.$store.state.cartList.length
+      return this.$strore.getters.cartLength
     }
+    */
+   // 2种语法 2.1
+   ...mapGetters(['cartLength','cartList'])
+  //  ...mapGetters
+   //2.1
+   /*
+    ...mapGetters({
+      映射过去可以写 length
+      length:cartLength,
+      list:cartLi
+    })
+   */
   }
 }
 </script>

@@ -20,7 +20,8 @@
     </scroll>
     <back-top @click.native='backClick' v-show='isShowBackTop'></back-top>
     <detail-buttom-bar @addCart='addToCart'/>
-     
+    <!-- 要是直接传字符串，不需要加: -->
+    <toast :message='message' :show='show'/>
   </div>
 </template>
 
@@ -39,10 +40,17 @@ import Scroll from 'components/common/scroll/Scroll'
 
 //直接用封装好的组件
 import GoodsList from 'components/content/goods/GoodsList'
+import Toast from 'components/common/toast/Toast'
+
+
 
 import {getDetail,Goods,Shop,GoodsParams,getRecommend} from 'network/detail'
 import {debuonce} from 'common/utils'
 import {itemListenerMixin,backTopMixin} from 'common/mixin'
+
+//Actions 辅助函数，映射关系
+import {mapActions} from 'vuex'
+
 
 export default {
   components:{
@@ -57,7 +65,8 @@ export default {
 
     GoodsList,
 
-    Scroll
+    Scroll,
+    Toast
 
   },
   mixins:[itemListenerMixin,backTopMixin],
@@ -79,7 +88,9 @@ export default {
       //做防抖
       getThemeTopYs:null,
       //记录滚动时位置，获取index
-      currentIndex:0
+      currentIndex:0,
+      message:'',
+      show:false
     }
   },
   created(){
@@ -210,6 +221,7 @@ export default {
      this.$bus.$off('itemImageLoad',this. homeImgListener)    
   },
   methods:{
+    ...mapActions(['addCart']), //可以是对象   也可以是数组
     imageLoad(){
       console.log('图片加载完了')
       this.$refs.scroll.refresh()
@@ -275,7 +287,19 @@ export default {
           // this.$Store.cartList.push(product)  //不要用这种方法
           // mutations 
       // this.$store.commit('addCart',product)
-      this.$store.dispatch('addCart',product)
+      this.addCart(product).then(res=>{
+         console.log(res)
+         this.show=true
+         this.message=res
+         setTimeout(()=>{
+          this.show=false
+          this.message=''
+         },1500)
+      })
+      //  上面是用了辅助函数
+      // this.$store.dispatch('addCart',product).then(res=>{
+      //   console.log(res)
+      // })
     }
     
   }

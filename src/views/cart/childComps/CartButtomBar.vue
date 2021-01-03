@@ -1,7 +1,7 @@
 <template>
   <div class="buttom-bar">
     <div class="check-content">
-      <check-button class="check-button"/>
+      <check-button :is-checked='isSelectAll' class="check-button"/>
       <span>全选</span>
     </div>
 
@@ -32,6 +32,15 @@ export default {
     },
     checkedLength(){
       return this.$store.state.cartList.filter(item=>item.checked).length
+    },
+    // 看是否全选中
+    isSelectAll(){
+      //方式一  性能不高
+    //  return !(this.$store.state.cartList.filter(item=>!item.checked).length)
+      //方式二  find  去找没有被选中的元素。
+      if(this.$store.state.cartList== 0) return false
+        return !this.$store.state.cartList.find(item=>!item.checked)
+      //方式三 for of  遍历
     }
   }
 }
@@ -70,6 +79,6 @@ export default {
     background-color:red;
     color: #fff;
     font-weight: bold;
-    text-align: center;
+    text-align: center
   }
 </style>

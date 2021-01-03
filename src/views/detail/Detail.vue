@@ -21,7 +21,7 @@
     <back-top @click.native='backClick' v-show='isShowBackTop'></back-top>
     <detail-buttom-bar @addCart='addToCart'/>
     <!-- 要是直接传字符串，不需要加: -->
-    <toast :message='message' :show='show'/>
+    <!-- <toast :message='message' :show='show'/> -->
   </div>
 </template>
 
@@ -40,7 +40,7 @@ import Scroll from 'components/common/scroll/Scroll'
 
 //直接用封装好的组件
 import GoodsList from 'components/content/goods/GoodsList'
-import Toast from 'components/common/toast/Toast'
+// import Toast from 'components/common/toast/Toast'
 
 
 
@@ -65,8 +65,8 @@ export default {
 
     GoodsList,
 
-    Scroll,
-    Toast
+    Scroll
+    // Toast
 
   },
   mixins:[itemListenerMixin,backTopMixin],
@@ -88,9 +88,9 @@ export default {
       //做防抖
       getThemeTopYs:null,
       //记录滚动时位置，获取index
-      currentIndex:0,
-      message:'',
-      show:false
+      currentIndex:0
+      // message:'',
+      // show:false
     }
   },
   created(){
@@ -288,13 +288,14 @@ export default {
           // mutations 
       // this.$store.commit('addCart',product)
       this.addCart(product).then(res=>{
-         console.log(res)
-         this.show=true
-         this.message=res
-         setTimeout(()=>{
-          this.show=false
-          this.message=''
-         },1500)
+        this.$Toast.show(res,1500)
+        //  console.log(res)
+        //  this.show=true
+        //  this.message=res
+        //  setTimeout(()=>{
+        //   this.show=false
+        //   this.message=''
+        //  },1500)
       })
       //  上面是用了辅助函数
       // this.$store.dispatch('addCart',product).then(res=>{
